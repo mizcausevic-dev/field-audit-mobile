@@ -1,0 +1,6 @@
+.gradle/
+build/
+site/
+screenshots/*.log
+app.stdout.log
+app.stderr.log

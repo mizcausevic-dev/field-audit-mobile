@@ -1,0 +1,7 @@
+{
+  "name": "field-audit-mobile",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Kotlin mobile-first field audit control plane for offline evidence capture, supervisor escalation, permit-safe remediation, and sync-trust visibility.",
+  "license": "AGPL-3.0-or-later"
+}
