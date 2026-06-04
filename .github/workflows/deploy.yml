@@ -46,6 +46,10 @@ jobs:
             **/.git*/**
             **/.github/**
 
+      - name: Sleep before retry (let FTP cap drain)
+        if: steps.ftp_first.outcome == 'failure'
+        run: sleep 60
+
       - name: Retry FTP Deploy if first attempt failed
         if: steps.ftp_first.outcome == 'failure'
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
