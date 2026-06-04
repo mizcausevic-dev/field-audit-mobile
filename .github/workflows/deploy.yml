@@ -31,7 +31,24 @@ jobs:
         run: |
           test -d site || (echo "FAIL: site/ missing" && exit 1)
           test -f site/index.html || (echo "FAIL: site/index.html missing" && exit 1)
-      - uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: FTP Deploy (attempt 1)
+        id: ftp_first
+        continue-on-error: true
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./site/
+          server-dir: /field/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/.github/**
+
+      - name: Retry FTP Deploy if first attempt failed
+        if: steps.ftp_first.outcome == 'failure'
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
